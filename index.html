@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="flex justify-between items-center w-52 p-4 bg-white shadow-md rounded-md">
+        <p id="action" class="text-gray-500 font-bold"></p>
+        <button onclick="runSpeechRecog()"
+            class="border-none p-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            Speech
+        </button>
+    </div>
+    <h3 id="output" class="mt-4 text-lg hidden"></h3>
+
+    <script>
+        runSpeechRecog = () => {
+            document.getElementById("output").innerHTML = "Loading text...";
+            var output = document.getElementById('output');
+            var action = document.getElementById('action');
+            let recognization = new webkitSpeechRecognition();
+            recognization.onstart = () => {
+                action.innerHTML = "Listening...";
+            }
+            recognization.onresult = (e) => {
+                var transcript = e.results[0][0].transcript;
+                output.innerHTML = transcript;
+                output.classList.remove("hidden")
+                action.innerHTML = "";
+            }
+            recognization.start();
+        }
+    </script>
+
+</body>
+
+</html>
